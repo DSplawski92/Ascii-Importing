@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" />
+  <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{256F1B66-7380-49E7-B75A-EAE175811103}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTestProject</RootNamespace>
+    <AssemblyName>UnitTestProject</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsciiDataImportTest\AsciiDataImportSource.cs" />
+    <Compile Include="AsciiDataImportTest\AsciiImportTest.cs" />
+    <Compile Include="DataMergerTest\DataMergerSource.cs" />
+    <Compile Include="DataMergerTest\DataMergerTest.cs" />
+    <Compile Include="ExcelDataImportTest\ExcelDataImportSource.cs" />
+    <Compile Include="ExcelDataImportTest\ExcelDataImportTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RowComparer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\ColumnDelimiterFilesTest\ComaDelimiter.csv">
+      <Link>AsciiDataImportTest\TestFiles\ComaDelimiter.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\ColumnDelimiterFilesTest\PipeDelimiter.csv">
+      <Link>AsciiDataImportTest\TestFiles\PipeDelimiter.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\ColumnDelimiterFilesTest\SemicolonDelimiter.csv">
+      <Link>AsciiDataImportTest\TestFiles\SemicolonDelimiter.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\ColumnDelimiterTheSameAsNumberDelimiter.csv">
+      <Link>AsciiDataImportTest\TestFiles\ColumnDelimiterTheSameAsNumberDelimiter.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\empty.csv">
+      <Link>AsciiDataImportTest\TestFiles\empty.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\InvalidSamples.csv">
+      <Link>AsciiDataImportTest\TestFiles\InvalidSamples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\samples.csv">
+      <Link>AsciiDataImportTest\TestFiles\samples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\SamplesWithEmptyLines.csv">
+      <Link>AsciiDataImportTest\TestFiles\SamplesWithEmptyLines.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\AsciiDataImportTestFiles\samplesWithoutHeaders.csv">
+      <Link>AsciiDataImportTest\TestFiles\samplesWithoutHeaders.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\DataWithEmptyLines.csv">
+      <Link>DataMergerTest\TestFiles\DataWithEmptyLines.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\invalidSamples.csv">
+      <Link>DataMergerTest\TestFiles\invalidSamples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\invalidTimestamps.csv">
+      <Link>DataMergerTest\TestFiles\invalidTimestamps.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\noheaders1.csv">
+      <Link>DataMergerTest\TestFiles\noheaders1.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\noheaders2.csv">
+      <Link>DataMergerTest\TestFiles\noheaders2.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\onlySamples.csv">
+      <Link>DataMergerTest\TestFiles\onlySamples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\samples.csv">
+      <Link>DataMergerTest\TestFiles\samples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\samples2.csv">
+      <Link>DataMergerTest\TestFiles\samples2.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\samples3.csv">
+      <Link>DataMergerTest\TestFiles\samples3.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\shortValidSamples.csv">
+      <Link>DataMergerTest\TestFiles\shortValidSamples.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\DataMergerTestFiles\shortValidSamples2.csv">
+      <Link>DataMergerTest\TestFiles\shortValidSamples2.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\duplicatedTimestamps.xls">
+      <Link>ExcelDataImportTest\TestFiles\duplicatedTimestamps.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\empty.xls">
+      <Link>ExcelDataImportTest\TestFiles\empty.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\invalidSamples.xls">
+      <Link>ExcelDataImportTest\TestFiles\invalidSamples.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\invalidSamples2.xls">
+      <Link>ExcelDataImportTest\TestFiles\invalidSamples2.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\invalidTimestamps.xls">
+      <Link>ExcelDataImportTest\TestFiles\invalidTimestamps.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\samples.xls">
+      <Link>ExcelDataImportTest\TestFiles\samples.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\samplesWithEmptyLineAfterHeaders.xls">
+      <Link>ExcelDataImportTest\TestFiles\samplesWithEmptyLineAfterHeaders.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\samplesWithFirstEmptyLine.xls">
+      <Link>ExcelDataImportTest\TestFiles\samplesWithFirstEmptyLine.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Assets\Files\Tests\ExcelDataImportTestFiles\shortSamples.xls">
+      <Link>ExcelDataImportTest\TestFiles\shortSamples.xls</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DS.AsciiImport\DS.AsciiImport.csproj">
+      <Project>{3E00D78F-7273-4F51-9202-D248B06F6D09}</Project>
+      <Name>DS.AsciiImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS.DataImporter\DS.DataImporter.csproj">
+      <Project>{42eca834-f8dc-4fd6-87c7-b6a7779bd12c}</Project>
+      <Name>DS.DataImporter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS.ExcelImport\DS.ExcelImport.csproj">
+      <Project>{28510978-7E40-4BA5-B1F2-8D52D1828649}</Project>
+      <Name>DS.ExcelImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS.Interfaces\DS.Interfaces.csproj">
+      <Project>{E241EF13-5C3E-427D-B88F-029804C77352}</Project>
+      <Name>DS.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ten projekt zawiera odwołania do pakietów NuGet, których nie ma na tym komputerze. Użyj przywracania pakietów NuGet, aby je pobrać. Aby uzyskać więcej informacji, zobacz http://go.microsoft.com/fwlink/?LinkID=322105. Brakujący plik: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.10.1\build\NUnit.props'))" />
+  </Target>
+  <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" />
+</Project>

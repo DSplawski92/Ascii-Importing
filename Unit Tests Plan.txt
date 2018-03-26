@@ -1,0 +1,36 @@
+Unit Tests:
+	ASCIIImportTest:
+		Test Case: Valid ASCII Configuration
+			Test Cases: File with headers
+				Test Case: Valid data in file
+					- Valid number of headers
+					- Valid number of rows 
+					- Valid number of samples
+					- Valid timestamps
+				Test Cases: Invalid data in file
+					Test Cases: Invalid column delimiter 	
+						1. Column delimiter the same as number delimiter
+							- throw exception ( invalid number of samples)
+						2. Column delimiter the same as delimiter in date time format
+							- throw exception ( invalid number of samples)
+					Test Cases: Number of headers not the same as number samples in row
+						1. Number of headers less than number of samples in row 
+							- generate missing headers
+						2. Number of headers greater than number of samples in row
+							- generate missing samples (NaN)
+					Test Case: Invalid sample format
+						- set sample as NaN
+					Test Case: Invalid Timestamp
+						- skip whole row or throw exception (whole data file invalid)
+					Test Case: Empty or whitespaces in row
+						- skip row
+			Test Case: File without headers
+				- generate headers based on first row
+				- skip excess cells if there are more than the first row
+				- add missing cells as NaN if there are less then first row
+		Test Case: Invalid ASCII Configuration
+			Test Case: Column delimiter the same as number delimiter or date time format delimiter
+				- throw exception
+			Test Case: File does not exist
+				- throw exception
+				
