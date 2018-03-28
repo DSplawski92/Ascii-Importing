@@ -16,8 +16,8 @@ namespace DS.ExcelImport
 
         public override string ToString()
         {
-            return "Excel Setings:\n" + $"Filename: {FileName}\n" + $"DateTimeFormat: {DateTimeFormat}\n" +
-                $"UseFirstRowAsHeader: {UseFirstRowAsHeader}\n" + $"SkipFirstRowsNum: {SkipFirstRowsNum}";
+            return string.Format("Excel Setings:\nFilename: {0}\nDateTimeFormat: {1}\nUseFirstRowAsHeader: {2}\nSkipFirstRowsNum: {3}",
+                FileName, DateTimeFormat, UseFirstRowAsHeader, SkipFirstRowsNum);
         }
     }
 }

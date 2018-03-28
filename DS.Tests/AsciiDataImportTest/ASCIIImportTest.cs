@@ -91,7 +91,7 @@ namespace UnitTestProject
 
             // assert
             Assert.AreEqual(1, rows.GroupBy(arg => arg.Samples.Count()).Count(), "Rows have a different number of columns.");
-            Assert.AreEqual(samplesNum, headersNum, $"The number of samples ({samplesNum}) is different from the number of headers ({headersNum}).");
+            Assert.AreEqual(samplesNum, headersNum, "The number of samples" + samplesNum + "is different from the number of headers" + headersNum);
         }
 
         [TestCaseSource(typeof(AsciiDataImportSource), "EmptyFilesAsciiSettings")]

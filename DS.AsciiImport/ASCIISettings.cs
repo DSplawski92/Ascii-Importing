@@ -11,8 +11,8 @@
 
         public override string ToString()
         {
-            return "Excel Setings:\n" + $"Filename: {FileName}\n" + $"ColDelimiter: {ColDelimiter}\n" + $"NumberDelimiter: {NumberDelimiter}\n" 
-                + $"DateTimeFormat: {DateTimeFormat}\n" + $"UseFirstRowAsHeader: {UseFirstRowAsHeader}\n" + $"SkipFirstRowsNum: {SkipFirstRowsNum}";
+            return string.Format("Excel Setings:\n" + "Filename: {0}\nColDelimiter: {1}\nNumberDelimiter: {2}\nDateTimeFormat: {3}\nUseFirstRowAsHeader: {4}\nSkipFirstRowsNum: {5}", 
+                FileName, ColDelimiter, NumberDelimiter, DateTimeFormat, UseFirstRowAsHeader, SkipFirstRowsNum);
         }
     }
 }

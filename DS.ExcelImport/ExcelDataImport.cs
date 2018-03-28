@@ -130,7 +130,8 @@ namespace DS.ExcelImport
             Row row = null;
             if(DateTime.TryParseExact(excelRow.Cells.First().ToString(), settings.DateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
             {
-                var samples = excelRow.Cells.Skip(1).Select(arg => double.TryParse(arg.ToString(), NumberStyles.Any, numberFormat, out double sample) ? sample : double.NaN).Take(colsNum.Value);
+                double sample;
+                var samples = excelRow.Cells.Skip(1).Select(arg => double.TryParse(arg.ToString(), NumberStyles.Any, numberFormat, out sample) ? sample : double.NaN).Take(colsNum.Value);
 
                 int samplesNum = samples.Count();
                 if (samplesNum < colsNum)
@@ -160,7 +161,7 @@ namespace DS.ExcelImport
             genericHeaders.Add("timestamp");
             for (int i = 1; i < genericHeaderSize; i++)
             {
-                genericHeaders.Add($"C{i}");
+                genericHeaders.Add("C" + i);
             }
             return genericHeaders;
         }

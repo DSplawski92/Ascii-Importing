@@ -78,7 +78,7 @@ namespace DS.AsciiImport
                 genericHeaders.Add("timestamp");
                 for (int i = 1; i <= genericHeaderSize; i++)
                 {
-                    genericHeaders.Add($"C{i}");
+                    genericHeaders.Add("C" + i);
                 }
                 headers = genericHeaders;
             }
@@ -126,10 +126,11 @@ namespace DS.AsciiImport
                 NumberDecimalSeparator = settings.NumberDelimiter
             };
 
+            double sample;
             return new Row
             {
                 Timestamp = DateTime.ParseExact(cells.First(), settings.DateTimeFormat, CultureInfo.InvariantCulture),
-                Samples = cells.Skip(1).Select(arg => double.TryParse(arg, NumberStyles.Any, numberFormat, out double sample) ? sample : double.NaN)
+                Samples = cells.Skip(1).Select(arg => double.TryParse(arg, NumberStyles.Any, numberFormat, out sample) ? sample : double.NaN)
             };
         }
     }

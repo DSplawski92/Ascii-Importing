@@ -295,7 +295,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="0.8*"/>
@@ -309,7 +309,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Samples}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" IsReadOnly="True" 
+        <DataGrid Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" IsReadOnly="True" 
                   IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="400" MinHeight="250" 
                   Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="50,50,50,0" VerticalAlignment="Stretch">
         </DataGrid>

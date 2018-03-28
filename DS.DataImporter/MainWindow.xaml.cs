@@ -57,7 +57,7 @@ namespace DS.DataImporter
             //if (importDialog.ShowDialog() == true)
             {
                 IDataImport asciiImport = new AsciiDataImport(asciiSettings);
-                if((sender as MenuItem).Tag.ToString() == "load ascii file")
+                //if((sender as MenuItem).Tag.ToString() == "load ascii file")
                 {
                     try
                     {
@@ -65,6 +65,7 @@ namespace DS.DataImporter
                         var rows = asciiImport.Load(1, 10);
                         //dataGrid.ItemsSource = samples;
                         dataGrid.DataContext = new RowsViewModel(headers, rows).RowsView;
+                        //dataGrid.DataContext = new RowsViewModel(rows, headers);
                         combo.ItemsSource = asciiImport.GetHeaders();
                         ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
                     }
