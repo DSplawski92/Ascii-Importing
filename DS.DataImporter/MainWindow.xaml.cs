@@ -64,7 +64,7 @@ namespace DS.DataImporter
                         var headers = asciiImport.GetHeaders();
                         var rows = asciiImport.Load(1, 10);
                         //dataGrid.ItemsSource = samples;
-                        dataGrid.DataContext = new RowsViewModel(headers, rows).RowsView;
+                        dataGrid.ItemsSource = new RowsViewModel(headers, rows).RowsView;
                         //dataGrid.DataContext = new RowsViewModel(rows, headers);
                         combo.ItemsSource = asciiImport.GetHeaders();
                         ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
