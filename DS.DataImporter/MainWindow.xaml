@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DS.DataImporter"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="DS.DataImporter.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="500" MinWidth="600">
@@ -295,7 +294,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid x:Name="LayoutRoot">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="0.8*"/>
@@ -309,16 +308,17 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" IsReadOnly="True" 
-                  IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="400" MinHeight="250" 
-                  Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="50,50,50,0" VerticalAlignment="Stretch">
-        </DataGrid>
-
+        <DataGrid Grid.Row="1" ItemsSource="{Binding RowsView}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" IsReadOnly="True" 
+                  IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="400" MinHeight="100" 
+                  Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="50,50,50,0" VerticalAlignment="Stretch" Background="White"/>
+        
         <StackPanel Grid.Row="2" VerticalAlignment="Stretch" Margin="20">
             
             <Label Content="Select columns to display in table:" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <ComboBox x:Name="combo" SelectionChanged="combo_SelectionChanged"  HorizontalAlignment="Center" VerticalAlignment="Top"
+            <ComboBox x:Name="combo" SelectionChanged="Combo_SelectionChanged"  HorizontalAlignment="Center" VerticalAlignment="Top"
                       Margin="0,0,0,0" MinWidth="50" Width="Auto" Height="23" Style="{DynamicResource MultiSelect}"/>
+            <ListView x:Name="li" Height="100">
+            </ListView>
         </StackPanel>
     </Grid>
 </Window>

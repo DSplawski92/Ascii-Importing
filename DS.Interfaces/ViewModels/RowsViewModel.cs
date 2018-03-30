@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS.Interfaces
 {
@@ -53,43 +51,37 @@ namespace DS.Interfaces
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public RowsViewModel(IEnumerable<Row> rows, IEnumerable<object> headers)
-        {
-            Rows = new ObservableCollection<Row>(rows);
-            Headers = headers;
-        }
-
+        private DataView rowsView;
         public DataView RowsView
         {
             get
             {
-                DataTable rowsView = new DataTable();
-                rowsView.Columns.Clear();
-                rowsView.Columns.Add(new DataColumn(headers.First().ToString(), typeof(DateTime)));
+                DataTable rowsTable = new DataTable();
+                rowsTable.Clear();
+                rowsTable.Columns.Add(new DataColumn(headers.First().ToString(), typeof(DateTime)));
                 foreach (var item in headers.Skip(1))
                 {
-                    rowsView.Columns.Add(new DataColumn(item.ToString(), typeof(double)));
+                    rowsTable.Columns.Add(new DataColumn(item.ToString(), typeof(double)));
                 }
-                //rowsView.Columns.AddRange(headers.Skip(1).Select(arg => new DataColumn(arg.ToString())).ToArray());
-                rowsView.Rows.Clear();
+                
+                var rowList = rows.ToList();
 
-                foreach (var item in rows)
+                foreach (var item in rowList)
                 {
-                    DataRow dataRow = rowsView.NewRow();
+                    DataRow dataRow = rowsTable.NewRow();
                     dataRow[0] = item.Timestamp;
 
                     int i = 1;
-                    foreach (var sample in item.Samples)
+                    foreach (var sample in item.Samples.ToList())
                     {
                         dataRow[i++] = sample;
                     }
 
-                    rowsView.Rows.Add(dataRow);
-                    //rowsView.Rows.Add(item.Timestamp, item.Samples.ToArray());
-                    //rowsView.Rows.Add(row); 
+                    rowsTable.Rows.Add(dataRow);
+
                 }
-                var temp = rowsView.AsDataView()[0].Row;
-                return rowsView.AsDataView();
+                rowsView = rowsTable.DefaultView;
+                return rowsView;
             }
         }
         public RowsViewModel(IEnumerable<object> headers, IEnumerable<Row> rows)

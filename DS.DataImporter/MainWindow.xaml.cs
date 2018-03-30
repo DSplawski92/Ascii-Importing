@@ -26,6 +26,7 @@ namespace DS.DataImporter
             UseFirstRowAsHeader = true,
             FileName = "shortValidSamples.csv"
         };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -63,9 +64,11 @@ namespace DS.DataImporter
                     {
                         var headers = asciiImport.GetHeaders();
                         var rows = asciiImport.Load(1, 10);
-                        //dataGrid.ItemsSource = samples;
-                        dataGrid.ItemsSource = new RowsViewModel(headers, rows).RowsView;
-                        //dataGrid.DataContext = new RowsViewModel(rows, headers);
+                        var t = new RowsViewModel(headers, rows).RowsView;
+                        
+                        dataGrid.DataContext = new RowsViewModel(headers, rows);
+                        
+                        li.ItemsSource = t;
                         combo.ItemsSource = asciiImport.GetHeaders();
                         ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
                     }
@@ -103,7 +106,7 @@ namespace DS.DataImporter
             }
         }
 
-        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboItems = ((ListBox)combo.Template.FindName("listBox", combo)).SelectedItems;
 

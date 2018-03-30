@@ -15,6 +15,7 @@ namespace DS.AsciiImport
         private readonly AsciiSettings settings;
         private IEnumerable<string> lines;
         private int? colsNum = null;    // valid number of columns in row
+        Dictionary<string, string> replacements = new Dictionary<string, string>() { { "/", @"\" }, { "[", "(" }, { "]", ")" }, { ".", ","} };
 
         public AsciiDataImport(AsciiSettings settings)
         {
@@ -83,7 +84,8 @@ namespace DS.AsciiImport
                 headers = genericHeaders;
             }
             colsNum = headers.Count();
-            return headers;
+            
+            return headers.Select(arg => arg.ToString().Replaces(replacements));
         }
 
         private void ValidateImportSettings()
