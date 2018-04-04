@@ -1,6 +1,7 @@
 ﻿using DS.AsciiImport;
 using DS.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ namespace DS.DataImporter
         //    NumberDelimiter = ",",
         //    SkipFirstRowsNum = 0,
         //    UseFirstRowAsHeader = true,
-        //    FileName = "longValidSamples.csv"
+        //    FileName = "shortValidSamples.csv"
         //};
 
         AsciiSettings asciiSettings = new AsciiSettings()
@@ -33,9 +34,11 @@ namespace DS.DataImporter
             FileName = "longValidSamples.csv"
         };
 
+        Stopwatch stopwatch;
         public MainWindow()
         {
             InitializeComponent();
+            stopwatch = new Stopwatch();
         }
 
         private void LoadData_Click(object sender, RoutedEventArgs e)
@@ -69,11 +72,15 @@ namespace DS.DataImporter
                     try
                     {
                         
+                        stopwatch.Start();
                         var headers = asciiImport.GetHeaders();
                         var rows = asciiImport.LoadAll();
-                        var t = new RowsViewModel(headers, rows).RowsView;
                         
-                        dataGrid.DataContext = new RowsViewModel(headers, rows);
+                        var t = new RowsViewModel(headers, rows).RowsView;
+                        dataGrid.ItemsSource = t;
+                        stopwatch.Stop();
+                        MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
+
                         combo.DataContext = asciiImport.GetHeaders();
                         ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
                     }

@@ -71,12 +71,13 @@ namespace DS.Interfaces
                     dataRow[0] = (item as Row).Timestamp;
 
                     int i = 1;
-                    foreach (var sample in (item as Row).Samples.ToList())
+                    foreach (var sample in (item as Row).Samples)
                     {
                         dataRow[i++] = sample;
                     }
 
                     rowsTable.Rows.Add(dataRow);
+                    //rowsTable.Rows.Add(item.Timestamp, item.Samples);
                 }
                 rowsView = rowsTable.DefaultView;
                 return rowsView;

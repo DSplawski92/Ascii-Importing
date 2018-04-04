@@ -35,7 +35,7 @@ namespace DS.AsciiImport
 
             if (lines.Count() == 0)
             {
-                return new List<Row>();
+                return new List<Row>().AsEnumerable();
             }
             // set valid number of column based on first row (headers in file or first row with samples)
             if (colsNum == null)
@@ -81,7 +81,7 @@ namespace DS.AsciiImport
                 {
                     genericHeaders.Add("C" + i);
                 }
-                headers = genericHeaders;
+                headers = genericHeaders.AsEnumerable();
             }
             colsNum = headers.Count();
             
