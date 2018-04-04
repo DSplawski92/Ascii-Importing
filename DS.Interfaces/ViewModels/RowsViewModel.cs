@@ -1,5 +1,4 @@
-﻿using AlphaChiTech.Virtualization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -25,20 +24,6 @@ namespace DS.Interfaces
                     headers = value;
                     OnPropertyChanged("Headers");
                 }
-            }
-        }
-        private VirtualizingObservableCollection<Row> _virtualizedSamples = null;
-        public VirtualizingObservableCollection<Row> VirtualizedSamples
-        {
-            get
-            {
-                if (_virtualizedSamples == null)
-                {
-                    _virtualizedSamples =
-                    new VirtualizingObservableCollection<Row>(
-                        new PaginationManager<Row>(new SamplesSource(rows)));
-                }
-                return _virtualizedSamples;
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -71,14 +56,14 @@ namespace DS.Interfaces
             get
             {
                 DataTable rowsTable = new DataTable();
-                rowsTable.Clear();
                 rowsTable.Columns.Add(new DataColumn(headers.First().ToString(), typeof(DateTime)));
+
                 foreach (var item in headers.Skip(1))
                 {
                     rowsTable.Columns.Add(new DataColumn(item.ToString(), typeof(double)));
                 }
                 
-                var rowList = VirtualizedSamples;
+                var rowList = rows;
 
                 foreach (var item in rowList)
                 {
@@ -92,7 +77,6 @@ namespace DS.Interfaces
                     }
 
                     rowsTable.Rows.Add(dataRow);
-
                 }
                 rowsView = rowsTable.DefaultView;
                 return rowsView;
