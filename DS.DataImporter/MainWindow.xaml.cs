@@ -34,11 +34,9 @@ namespace DS.DataImporter
             FileName = "longValidSamples.csv"
         };
 
-        Stopwatch stopwatch;
         public MainWindow()
         {
             InitializeComponent();
-            stopwatch = new Stopwatch();
         }
 
         private void LoadData_Click(object sender, RoutedEventArgs e)
@@ -71,17 +69,13 @@ namespace DS.DataImporter
                 {
                     try
                     {
-                        
-                        stopwatch.Start();
                         var headers = asciiImport.GetHeaders();
                         var rows = asciiImport.LoadAll();
                         
                         var t = new RowsViewModel(headers, rows).RowsView;
                         dataGrid.ItemsSource = t;
-                        stopwatch.Stop();
-                        MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
 
-                        combo.DataContext = asciiImport.GetHeaders();
+                        combo.DataContext = headers;
                         ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
                     }
                     catch (Exception exc)

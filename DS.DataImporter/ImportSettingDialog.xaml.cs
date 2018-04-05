@@ -15,6 +15,7 @@ namespace DS.DataImporter
         public ImportSettingsDialog()
         {
             InitializeComponent();
+            DataContext = new ImportSettingsDialogVievModel();
             dateTimeFormat.ItemsSource = new[] { "dd.MM.yyyy HH:mm:ss", "dd-MM-yyyy HH:mm:ss", "dd/MM/yyyy HH:mm:ss" };
         }
 

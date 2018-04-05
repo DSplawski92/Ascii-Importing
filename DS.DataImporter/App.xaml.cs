@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DS.Interfaces;
 
 namespace DS.DataImporter
 {
@@ -13,5 +14,14 @@ namespace DS.DataImporter
     /// </summary>
     public partial class App : Application
     {
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            new MainWindow
+            {
+                DataContext = new RowsViewModel()
+            }.Show();
+        }
     }
 }

@@ -19,15 +19,15 @@
                 <Button x:Name="browseButton" Content="Browse" Click="BrowseButton_Click"></Button>
             </WrapPanel>
             <Label Content="Column delimiter:"/>
-            <TextBox x:Name="columnDelimiter" Width="Auto" />
+            <TextBox x:Name="columnDelimiter" Width="Auto" Text="{Binding AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}" />
             <Label Content="Date time format:"/>
-            <ListBox x:Name="dateTimeFormat" Width="Auto" SelectionMode="Single" Height="20">
+            <ListBox x:Name="dateTimeFormat" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}">
             </ListBox>
             <Label Content="Number delimiter:"/>
-            <TextBox x:Name="numberDelimiter" Width="Auto"/>
+            <TextBox x:Name="numberDelimiter" Width="Auto" Text="{Binding AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>
             <Label Content="Skip first rows number:"/>
-            <TextBox x:Name="SkipFirstRowsNum"/>
-            <CheckBox x:Name="isHeadersInFirstRow" Content="Headers in first row" VerticalAlignment="Center" Margin="0,10"/>
+            <TextBox x:Name="SkipFirstRowsNum" Text="{Binding AsciiSettings.SkipForstRowsNum, Mode=OneWayToSource}"/>
+            <CheckBox x:Name="isHeadersInFirstRow" Content="Headers in first row" VerticalAlignment="Center" Margin="0,10" IsChecked="{Binding AsciiSettings.UseFirstRowAsHeader, Mode=OneWayToSource}"/>
         </StackPanel>
         <WrapPanel Margin="0, 0, 20, 20" Grid.Row="1" HorizontalAlignment="Right">
             <Button x:Name="ok" Width="60"  Margin="0,0,20,0" Content="OK" Click="Ok_Click" VerticalAlignment="Bottom"/>

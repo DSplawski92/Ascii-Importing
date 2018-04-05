@@ -4,17 +4,24 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace DS.Interfaces
 {
     public class RowsViewModel : INotifyPropertyChanged
     {
-        private IEnumerable<Row> rows;
-        private IEnumerable<object> headers;
+        private IEnumerable<Row> rows = null;
+        private IEnumerable<object> headers = null;
         public IEnumerable<object> Headers
         {
             get
             {
+                if(headers == null)
+                {
+                    headers = new List<object>();
+                }
+
                 return headers;
             }
             set
@@ -22,35 +29,22 @@ namespace DS.Interfaces
                 if (headers != value)
                 {
                     headers = value;
-                    OnPropertyChanged("Headers");
+                    OnPropertyChanged();
                 }
             }
         }
+        public IDataImport dataImport;
+        public ICommand SayHi { get { return new RelayCommand(LoadData, CanLoadData); } }
         public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<Row> _rows;
-        public ObservableCollection<Row> Rows
-        {
-            get
-            {
-                return _rows;
-            }
-            set
-            {
-                if (_rows != value)
-                {
-                    _rows = value;
-                    OnPropertyChanged("Rows");
-                }
-            }
-        }
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if(PropertyChanged != null)
+            {
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
-        private DataView rowsView;
         public DataView RowsView
         {
             get
@@ -77,16 +71,19 @@ namespace DS.Interfaces
                     }
 
                     rowsTable.Rows.Add(dataRow);
-                    //rowsTable.Rows.Add(item.Timestamp, item.Samples);
                 }
-                rowsView = rowsTable.DefaultView;
-                return rowsView;
+                return rowsTable.DefaultView;
             }
         }
+
         public RowsViewModel(IEnumerable<object> headers, IEnumerable<Row> rows)
         {
             this.headers = headers;
             this.rows = rows;
+        }
+
+        public RowsViewModel()
+        {
         }
     }
 }

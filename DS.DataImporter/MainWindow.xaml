@@ -312,7 +312,7 @@
 
         <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding}" EnableColumnVirtualization="True" EnableRowVirtualization="True" IsReadOnly="True" 
                   IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="200" MinHeight="100" MaxWidth="600" MaxHeight="400"
-                  Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="100,100,100,100" VerticalAlignment="Stretch" Background="White">
+                  Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="100,100,100,100" VerticalAlignment="Stretch">
         </DataGrid>
         
         <StackPanel Grid.Row="2" VerticalAlignment="Stretch" Margin="20">
