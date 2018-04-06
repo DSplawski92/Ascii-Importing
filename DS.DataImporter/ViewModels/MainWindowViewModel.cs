@@ -50,6 +50,7 @@ namespace DS.DataImporter
                 ImportData(importVM.AsciiSettings);
                 rowsView = CreateDataView();
             }
+            importView.Close();
         }
 
         private void ImportData(AsciiSettings asciiSettings)
