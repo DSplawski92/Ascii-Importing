@@ -6,9 +6,11 @@
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="DS.DataImporter.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="500" MinWidth="600"
-        xmlns:local="clr-namespace:DS.Interfaces;assembly=DS.Interfaces">
+        xmlns:local="clr-namespace:DS.DataImporter">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
-        
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -305,12 +307,12 @@
         
         <Menu Grid.Row="0" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Top" Width="Auto">
             <MenuItem Header="Data">
-                <MenuItem Header="Load from file" Tag="load ascii file" Click="LoadData_Click"/>
-                <MenuItem Header="Load and merge files" Tag="merge ascii files" Click="LoadData_Click"/>
+                <MenuItem Header="Load from file" Tag="load ascii file" Command="{Binding OpenImportDialog}"/>
+                <!--<MenuItem Header="Load and merge files" Tag="merge ascii files" Click="LoadData_Click"/>-->
             </MenuItem>
         </Menu>
 
-        <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding}" EnableColumnVirtualization="True" EnableRowVirtualization="True" IsReadOnly="True" 
+        <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding RowsView}" EnableColumnVirtualization="True" EnableRowVirtualization="True" IsReadOnly="True" 
                   IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="200" MinHeight="100" MaxWidth="600" MaxHeight="400"
                   Width="Auto" Height="Auto" x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="100,100,100,100" VerticalAlignment="Stretch">
         </DataGrid>
@@ -318,7 +320,7 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Stretch" Margin="20">
             
             <Label Content="Select columns to display in table:" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <ComboBox x:Name="combo" ItemsSource="{Binding}" SelectionChanged="Combo_SelectionChanged"  HorizontalAlignment="Center" VerticalAlignment="Top"
+            <ComboBox x:Name="combo" ItemsSource="{Binding Headers}" SelectionChanged="Combo_SelectionChanged"  HorizontalAlignment="Center" VerticalAlignment="Top"
                       Margin="0,0,0,0" MinWidth="50" Width="Auto" Height="23" Style="{DynamicResource MultiSelect}"/>
         </StackPanel>
     </Grid>

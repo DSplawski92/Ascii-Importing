@@ -92,6 +92,7 @@
     </ApplicationDefinition>
     <Compile Include="DataMerger.cs" />
     <Compile Include="ViewModels\ImportSettingsDialogVievModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="ImportSettingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

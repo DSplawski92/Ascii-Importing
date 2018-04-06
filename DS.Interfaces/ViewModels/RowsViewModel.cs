@@ -34,7 +34,7 @@ namespace DS.Interfaces
             }
         }
         public IDataImport dataImport;
-        public ICommand SayHi { get { return new RelayCommand(LoadData, CanLoadData); } }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -50,7 +50,7 @@ namespace DS.Interfaces
             get
             {
                 DataTable rowsTable = new DataTable();
-                rowsTable.Columns.Add(new DataColumn(headers.First().ToString(), typeof(DateTime)));
+                rowsTable.Columns.Add(new DataColumn(Headers.First().ToString(), typeof(DateTime)));
 
                 foreach (var item in headers.Skip(1))
                 {

@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DS.DataImporter"
-        mc:Ignorable="d"
+        xmlns:interfaces="clr-namespace:DS.Interfaces;assembly=DS.Interfaces"
+        mc:Ignorable="d"     
         Title="ASCII Import Settings" Height="350" Width="300">
-
+    <Window.Resources>
+        <interfaces:StringToCharConverter x:Key="StringToCharConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,22 +19,26 @@
             <Label Content="Select ASCII file to import:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
             <WrapPanel>
                 <TextBox x:Name="fileName" Text="{Binding FileName}" Width="200"></TextBox>
-                <Button x:Name="browseButton" Content="Browse" Click="BrowseButton_Click"></Button>
+                <Button x:Name="browseButton" Content="Browse" Command="{Binding FileDialog}"></Button>
             </WrapPanel>
+            
             <Label Content="Column delimiter:"/>
-            <TextBox x:Name="columnDelimiter" Width="Auto" Text="{Binding AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}" />
+            <TextBox x:Name="columnDelimiter" Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}"/>
+            
             <Label Content="Date time format:"/>
-            <ListBox x:Name="dateTimeFormat" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}">
-            </ListBox>
+            <ListBox x:Name="dateTimeFormat" ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}"/>
+
             <Label Content="Number delimiter:"/>
-            <TextBox x:Name="numberDelimiter" Width="Auto" Text="{Binding AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>
+            <TextBox x:Name="numberDelimiter" Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>
+            
             <Label Content="Skip first rows number:"/>
             <TextBox x:Name="SkipFirstRowsNum" Text="{Binding AsciiSettings.SkipForstRowsNum, Mode=OneWayToSource}"/>
+            
             <CheckBox x:Name="isHeadersInFirstRow" Content="Headers in first row" VerticalAlignment="Center" Margin="0,10" IsChecked="{Binding AsciiSettings.UseFirstRowAsHeader, Mode=OneWayToSource}"/>
         </StackPanel>
         <WrapPanel Margin="0, 0, 20, 20" Grid.Row="1" HorizontalAlignment="Right">
-            <Button x:Name="ok" Width="60"  Margin="0,0,20,0" Content="OK" Click="Ok_Click" VerticalAlignment="Bottom"/>
-            <Button x:Name="cancel" Width="60"  Content="Cancel" Click="cancel_Click"/>
+            <Button x:Name="ok" Width="60"  Margin="0,0,20,0" Content="OK" Command="{Binding SuccessCloseDialog}" CommandParameter="{Binding ElementName=Window}" VerticalAlignment="Bottom"/>
+            <Button x:Name="cancel" Width="60"  Content="Cancel" Command="{Binding CancelCloseDialog}" CommandParameter="{Binding ElementName=Window}"/>
         </WrapPanel>
     </Grid>
 </Window>

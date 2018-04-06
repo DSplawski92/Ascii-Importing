@@ -6,17 +6,20 @@ namespace DS.Interfaces
     public class RelayCommand : ICommand
     {
         private readonly Func<Boolean> canExecute;
-        private readonly Action execute;
+        private readonly Action<object> execute;
 
-        public RelayCommand(Action execute)
+        public RelayCommand(Action<object> execute)
           : this(execute, null)
         {
         }
 
-        public RelayCommand(Action execute, Func<Boolean> canExecute)
+        public RelayCommand(Action<object> execute, Func<Boolean> canExecute)
         {
             if (execute == null)
+            {
                 throw new ArgumentNullException("execute");
+            }
+
             this.execute = execute;
             this.canExecute = canExecute;
         }
@@ -26,12 +29,16 @@ namespace DS.Interfaces
             add
             {
                 if (canExecute != null)
+                {
                     CommandManager.RequerySuggested += value;
+                }
             }
             remove
             {
                 if (canExecute != null)
+                {
                     CommandManager.RequerySuggested -= value;
+                }
             }
         }
 
@@ -42,7 +49,7 @@ namespace DS.Interfaces
 
         public void Execute(Object parameter)
         {
-            execute();
+            execute(parameter);
         }
     }
 }
