@@ -12,11 +12,11 @@ namespace UnitTestProject
 {
     public class AsciiDataImportSource
     {
-        static AsciiSettings CreateAsciiSettings(string fileName, char colDelimiter = ';', string dateTimeFormat = "yyyy-MM-dd HH:mm:ss", string numberDelimiter = ",", int skipFirstRowsNum = 1, bool useFirstRowAsHeader = true)
+        static AsciiSettings CreateAsciiSettings(string fileName, string colDelimiter = ";", string dateTimeFormat = "yyyy-MM-dd HH:mm:ss", string numberDelimiter = ",", int skipFirstRowsNum = 1, bool useFirstRowAsHeader = true)
         {
             return new AsciiSettings()
             {
-                ColDelimiter = colDelimiter,
+                ColumnDelimiter = colDelimiter,
                 DateTimeFormat = dateTimeFormat,
                 FileName = @"AsciiDataImportTest/TestFiles/" + fileName,
                 NumberDelimiter = numberDelimiter,
@@ -103,7 +103,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ':');
+                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ":");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -113,7 +113,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ',');
+                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ",");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -123,7 +123,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ',');
+                    var settings = CreateAsciiSettings("ColumnDelimiterTheSameAsNumberDelimiter.csv", colDelimiter: ",");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -144,7 +144,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("samples.csv", colDelimiter: '/');
+                    var settings = CreateAsciiSettings("samples.csv", colDelimiter: "/");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -154,7 +154,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("samples.csv", colDelimiter: '.');
+                    var settings = CreateAsciiSettings("samples.csv", colDelimiter: ".");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -164,7 +164,7 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("InvalidSamples.csv", colDelimiter: '.');
+                    var settings = CreateAsciiSettings("InvalidSamples.csv", colDelimiter: ".");
                     yield return new TestCaseData(settings, 10);
                 }
             }
@@ -185,11 +185,11 @@ namespace UnitTestProject
             get
             {
                 {
-                    var settings = CreateAsciiSettings("SemicolonDelimiter.csv", colDelimiter: ';');
+                    var settings = CreateAsciiSettings("SemicolonDelimiter.csv", colDelimiter: ";");
                     yield return new TestCaseData(settings, 10, 3);
                 }
                 {
-                    var settings = CreateAsciiSettings("PipeDelimiter.csv", colDelimiter: '|');
+                    var settings = CreateAsciiSettings("PipeDelimiter.csv", colDelimiter: "|");
                     yield return new TestCaseData(settings, 10, 3);
                 }
             }

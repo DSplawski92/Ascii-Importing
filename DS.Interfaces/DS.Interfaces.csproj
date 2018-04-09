@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\StringToCharConverter.cs" />
+    <Compile Include="Converters\IntConverter.cs" />
     <Compile Include="IDataImport.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="StringExtensions.cs" />

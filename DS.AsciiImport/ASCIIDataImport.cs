@@ -40,7 +40,7 @@ namespace DS.AsciiImport
             // set valid number of column based on first row (headers in file or first row with samples)
             if (colsNum == null)
             {
-                var firstRow = File.ReadLines(settings.FileName).First().Split(settings.ColDelimiter);
+                var firstRow = File.ReadLines(settings.FileName).First().Split(settings.ColumnDelimiter.First());
                 colsNum = firstRow.Count();
             }
 
@@ -65,7 +65,7 @@ namespace DS.AsciiImport
             {
                 foreach (var line in lines)
                 {
-                    headers = line.Split(settings.ColDelimiter);
+                    headers = line.Split(settings.ColumnDelimiter.First());
                     if(headers.Count() > 1)
                     {
                         break;
@@ -75,7 +75,7 @@ namespace DS.AsciiImport
             else
             {
                 List<object> genericHeaders = new List<object>();
-                int genericHeaderSize = lines.Skip(settings.SkipFirstRowsNum).First().Split(settings.ColDelimiter).Skip(1).Count();
+                int genericHeaderSize = lines.Skip(settings.SkipFirstRowsNum).First().Split(settings.ColumnDelimiter.First()).Skip(1).Count();
                 genericHeaders.Add("timestamp");
                 for (int i = 1; i <= genericHeaderSize; i++)
                 {
@@ -94,11 +94,11 @@ namespace DS.AsciiImport
             {
                 throw new FileNotFoundException("File does not exist.");
             }
-            if (settings.ColDelimiter == settings.NumberDelimiter.First())
+            if (settings.ColumnDelimiter.First() == settings.NumberDelimiter.First())
             {
                 throw new ArgumentException("The column delimiter can not be the same as decimal delimiter.");
             }
-            if (settings.DateTimeFormat.Contains(settings.ColDelimiter))
+            if (settings.DateTimeFormat.Contains(settings.ColumnDelimiter.First()))
             {
                 throw new ArgumentException("The column delimiter must not be contained in date time format.");
             }
@@ -109,7 +109,7 @@ namespace DS.AsciiImport
             if (String.IsNullOrWhiteSpace(line))
                 return null;
 
-            var cells = line.Split(settings.ColDelimiter).Take(colsNum.Value).ToList();
+            var cells = line.Split(settings.ColumnDelimiter.First()).Take(colsNum.Value).ToList();
 
             if (cells.Count() <= 1)
                 throw new FormatException("Invalid column delimiter");

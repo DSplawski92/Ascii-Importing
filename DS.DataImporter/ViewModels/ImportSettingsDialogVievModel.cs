@@ -11,11 +11,22 @@ namespace DS.DataImporter
     class ImportSettingsDialogVievModel : INotifyPropertyChanged
     {
         public AsciiSettings AsciiSettings { get; set; }
+        public string[] DateTimeFormats
+        {
+            get
+            {
+                return new[] 
+                {
+                    "dd.MM.yyyy HH:mm:ss", "dd-MM-yyyy HH:mm:ss", "dd/MM/yyyy HH:mm:ss",
+                    "yyyy.MM.dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd HH:mm:ss",
+                };
+            }
+        }
         public ICommand FileDialog { get { return new RelayCommand(OpenFileDialogExecute, () => true); } }
         public ICommand SuccessCloseDialog { get { return new RelayCommand(SuccessCloseDialogExecute, CanCloseDialogExecute); } }
         public ICommand CancelCloseDialog { get { return new RelayCommand(CancelCloseDialogExecute, () => true); } }
 
-        public void OpenFileDialogExecute(object parameter)
+        private void OpenFileDialogExecute(object parameter)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
@@ -28,7 +39,7 @@ namespace DS.DataImporter
 
         private bool CanCloseDialogExecute()
         {
-            if (string.IsNullOrWhiteSpace(AsciiSettings.ColDelimiter.ToString()))
+            if (string.IsNullOrWhiteSpace(AsciiSettings.ColumnDelimiter))
             {
                 return false;
             }
@@ -48,17 +59,15 @@ namespace DS.DataImporter
             return true;
         }
 
-        public void SuccessCloseDialogExecute(object parameter)
+        private void SuccessCloseDialogExecute(object parameter)
         {
             (parameter as Window).DialogResult = true;
         }
 
-        public void CancelCloseDialogExecute(object parameter)
+        private void CancelCloseDialogExecute(object parameter)
         {
             (parameter as Window).DialogResult = false;
-        }
-
-        public string[] DateTimeFormats { get { return new[] { "dd.MM.yyyy HH:mm:ss", "dd-MM-yyyy HH:mm:ss", "dd/MM/yyyy HH:mm:ss" }; } }
+        }      
 
         public event PropertyChangedEventHandler PropertyChanged;
 

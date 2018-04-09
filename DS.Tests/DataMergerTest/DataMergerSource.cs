@@ -12,11 +12,11 @@ namespace UnitTestProject
 {
     public class DataMergerSource
     {
-        static AsciiSettings CreateAsciiSettings(string fileName, char colDelimiter = ';', string dateTimeFormat = "dd.MM.yyyy HH:mm:ss", string numberDelimiter = ",", int skipFirstRowsNum = 0, bool useFirstRowAsHeader = true)
+        static AsciiSettings CreateAsciiSettings(string fileName, string colDelimiter = ";", string dateTimeFormat = "dd.MM.yyyy HH:mm:ss", string numberDelimiter = ",", int skipFirstRowsNum = 0, bool useFirstRowAsHeader = true)
         {
             return new AsciiSettings()
             {
-                ColDelimiter = colDelimiter,
+                ColumnDelimiter = colDelimiter,
                 DateTimeFormat = dateTimeFormat,
                 FileName = @"DataMergerTest/TestFiles/" + fileName,
                 NumberDelimiter = numberDelimiter,
@@ -84,8 +84,8 @@ namespace UnitTestProject
             {
                 var settings = new List<AsciiSettings>()
                 {
-                    CreateAsciiSettings("shortValidSamples.csv", colDelimiter: '/'),
-                    CreateAsciiSettings("shortValidSamples2.csv", colDelimiter: '/')
+                    CreateAsciiSettings("shortValidSamples.csv", colDelimiter: "/"),
+                    CreateAsciiSettings("shortValidSamples2.csv", colDelimiter: "/")
                 };
                 yield return new TestCaseData(settings);
             }
@@ -146,7 +146,7 @@ namespace UnitTestProject
                     var settings = new List<AsciiSettings>()
                     {
                         CreateAsciiSettings("shortValidSamples.csv", skipFirstRowsNum: 1),
-                        CreateAsciiSettings("onlySamples.csv", colDelimiter: '|', dateTimeFormat: "dd-MM-yyyy HH:mm:ss", numberDelimiter: ".", skipFirstRowsNum: 0, useFirstRowAsHeader: false)
+                        CreateAsciiSettings("onlySamples.csv", colDelimiter: "|", dateTimeFormat: "dd-MM-yyyy HH:mm:ss", numberDelimiter: ".", skipFirstRowsNum: 0, useFirstRowAsHeader: false)
                     };
                     yield return new TestCaseData(settings, 15);
                 }

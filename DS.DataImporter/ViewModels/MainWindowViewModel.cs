@@ -2,7 +2,6 @@
 using DS.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -48,7 +47,7 @@ namespace DS.DataImporter
             if (importView.ShowDialog() == true)
             {
                 ImportData(importVM.AsciiSettings);
-                rowsView = CreateDataView();
+                RowsView = CreateDataView();
             }
             importView.Close();
         }
@@ -82,9 +81,9 @@ namespace DS.DataImporter
             }
             set
             {
-                if (RowsView != value)
+                if (rowsView != value)
                 {
-                    rowsView = CreateDataView();
+                    rowsView = value;
                     OnPropertyChanged();
                 }
             }

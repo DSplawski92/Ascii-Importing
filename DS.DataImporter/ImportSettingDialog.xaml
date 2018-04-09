@@ -8,7 +8,7 @@
         mc:Ignorable="d"     
         Title="ASCII Import Settings" Height="350" Width="300">
     <Window.Resources>
-        <interfaces:StringToCharConverter x:Key="StringToCharConverter"/>
+        <interfaces:IntConverter x:Key="intConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -18,27 +18,27 @@
         <StackPanel Grid.Row="0" Margin="10">
             <Label Content="Select ASCII file to import:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
             <WrapPanel>
-                <TextBox x:Name="fileName" Text="{Binding FileName}" Width="200"></TextBox>
-                <Button x:Name="browseButton" Content="Browse" Command="{Binding FileDialog}"></Button>
+                <TextBox Text="{Binding FileName}" Width="200"></TextBox>
+                <Button Content="Browse" Command="{Binding FileDialog}"></Button>
             </WrapPanel>
             
             <Label Content="Column delimiter:"/>
-            <TextBox x:Name="columnDelimiter" Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}"/>
+            <TextBox Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}"/>
             
             <Label Content="Date time format:"/>
-            <ListBox x:Name="dateTimeFormat" ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}"/>
+            <ListBox ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}"/>
 
             <Label Content="Number delimiter:"/>
-            <TextBox x:Name="numberDelimiter" Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>
+            <TextBox Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>
             
             <Label Content="Skip first rows number:"/>
-            <TextBox x:Name="SkipFirstRowsNum" Text="{Binding AsciiSettings.SkipForstRowsNum, Mode=OneWayToSource}"/>
+            <TextBox Text="{Binding AsciiSettings.SkipFirstRowsNum, Converter={StaticResource intConverter}, Mode=OneWayToSource}"/>
             
-            <CheckBox x:Name="isHeadersInFirstRow" Content="Headers in first row" VerticalAlignment="Center" Margin="0,10" IsChecked="{Binding AsciiSettings.UseFirstRowAsHeader, Mode=OneWayToSource}"/>
+            <CheckBox Content="Headers in first row" VerticalAlignment="Center" Margin="0,10" IsChecked="{Binding AsciiSettings.UseFirstRowAsHeader, Mode=OneWayToSource}"/>
         </StackPanel>
         <WrapPanel Margin="0, 0, 20, 20" Grid.Row="1" HorizontalAlignment="Right">
-            <Button x:Name="ok" Width="60"  Margin="0,0,20,0" Content="OK" Command="{Binding SuccessCloseDialog}" CommandParameter="{Binding ElementName=importSettingsDialog}" VerticalAlignment="Bottom"/>
-            <Button x:Name="cancel" Width="60"  Content="Cancel" Command="{Binding CancelCloseDialog}" CommandParameter="{Binding ElementName=importSettingsDialog}"/>
+            <Button Width="60"  Margin="0,0,20,0" Content="OK" Command="{Binding SuccessCloseDialog}" CommandParameter="{Binding ElementName=importSettingsDialog}" VerticalAlignment="Bottom"/>
+            <Button Width="60"  Content="Cancel" Command="{Binding CancelCloseDialog}" CommandParameter="{Binding ElementName=importSettingsDialog}"/>
         </WrapPanel>
     </Grid>
 </Window>
