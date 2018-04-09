@@ -26,7 +26,7 @@
             <TextBox Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.ColumnDelimiter, Mode=OneWayToSource}"/>
             
             <Label Content="Date time format:"/>
-            <ListBox ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" SelectionMode="Single" Height="20" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}"/>
+            <ListBox ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" SelectionMode="Single" Height="23" SelectedValue="{Binding AsciiSettings.DateTimeFormat, Mode=OneWayToSource}"/>
 
             <Label Content="Number delimiter:"/>
             <TextBox Width="Auto" MaxLength="1" Text="{Binding Path=AsciiSettings.NumberDelimiter, Mode=OneWayToSource}"/>

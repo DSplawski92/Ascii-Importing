@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,6 +11,11 @@ namespace DS.DataImporter
         public MainWindow()
         {
             InitializeComponent();
+            var dpd = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ComboBox));
+            if (dpd != null)
+            {
+                dpd.AddValueChanged(combo, OnSourceUpdated);
+            }
         }
 
         private void DataLoaded(object sender, RoutedEventArgs e)
@@ -73,7 +80,7 @@ namespace DS.DataImporter
             }
         }
 
-        private void dataGrid_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        private void OnSourceUpdated(object sender, EventArgs e)
         {
             ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
         }

@@ -47,9 +47,22 @@ namespace DS.DataImporter
             if (importView.ShowDialog() == true)
             {
                 ImportData(importVM.AsciiSettings);
-                RowsView = CreateDataView();
             }
             importView.Close();
+        }
+
+        private void LoadCustomData(object parameter)
+        {
+            AsciiSettings asciiSettings = new AsciiSettings()
+            {
+                ColumnDelimiter = ";",
+                DateTimeFormat = "dd.MM.yyyy HH:mm:ss",
+                FileName = "shortValidSamples.csv",
+                NumberDelimiter = ",",
+                SkipFirstRowsNum = 1,
+                UseFirstRowAsHeader = true
+            };
+            ImportData(asciiSettings);
         }
 
         private void ImportData(AsciiSettings asciiSettings)
@@ -57,6 +70,7 @@ namespace DS.DataImporter
             dataImport = new AsciiDataImport(asciiSettings);
             Headers = dataImport.GetHeaders();
             rows = dataImport.LoadAll();
+            RowsView = CreateDataView();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

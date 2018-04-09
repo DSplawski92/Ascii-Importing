@@ -312,7 +312,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="1"  AutoGenerateColumns="True" ItemsSource="{Binding RowsView}" EnableColumnVirtualization="True" EnableRowVirtualization="True" IsReadOnly="True" 
+        <DataGrid x:Name="dataGrid"  Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding RowsView}" EnableColumnVirtualization="True" EnableRowVirtualization="True" IsReadOnly="True" 
                   IsSynchronizedWithCurrentItem="True" SelectionMode="Extended" SelectionUnit="Cell" MinWidth="200" MinHeight="100" MaxWidth="600" MaxHeight="400"
                   Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Margin="100,100,100,100" VerticalAlignment="Stretch">
         </DataGrid>
@@ -320,7 +320,7 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Stretch" Margin="20">
             
             <Label Content="Select columns to display in table:" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <ComboBox x:Name="combo" ItemsSource="{Binding Headers}" SelectionChanged="Combo_SelectionChanged"  HorizontalAlignment="Center" VerticalAlignment="Top"
+            <ComboBox x:Name="combo" ItemsSource="{Binding Headers, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" SelectionChanged="Combo_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Top"
                       Margin="0,0,0,0" MinWidth="50" Width="Auto" Height="23" Style="{DynamicResource MultiSelect}"/>
         </StackPanel>
     </Grid>
