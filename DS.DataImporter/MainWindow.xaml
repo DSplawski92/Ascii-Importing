@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="DS.DataImporter.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="500" MinWidth="600"
-        xmlns:local="clr-namespace:DS.DataImporter">
+        Title="Data Importer" MinHeight="500" MinWidth="600"
+        xmlns:local="clr-namespace:DS.DataImporter"
+        xmlns:interfaces="clr-namespace:DS.Interfaces;assembly=DS.Interfaces">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
+        <interfaces:MultiSelectComboBoxConverter x:Key="multiSelectComboBoxConverter"/>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -20,7 +22,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
+        <!--#region ComboBox look-->
+        <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="1,0" StartPoint="0,0">
             <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
             <GradientStop Color="#FFE5E5E5" Offset="1.0"/>
         </LinearGradientBrush>
@@ -65,7 +68,7 @@
         <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
         <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
             <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="IsTabStop" Value="true"/>
             <Setter Property="Focusable" Value="false"/>
             <Setter Property="ClickMode" Value="Press"/>
             <Setter Property="Template">
@@ -157,31 +160,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
         <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
                 </Grid.ColumnDefinitions>
-                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                       Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
                     <Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">
-                        <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                        <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" 
+                                Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                             <ScrollViewer x:Name="DropDownScrollViewer" CanContentScroll="True">
                                 <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                     <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
-                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" 
+                                                   Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
                                     </Canvas>
-                                    <ListBox x:Name="listBox" ItemsSource="{TemplateBinding ItemsSource}" SelectionMode="Multiple" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    <ListBox x:Name="listBox"  SelectionChanged="listBox_SelectionChanged" ItemsSource="{TemplateBinding ItemsSource}" SelectionMode="Multiple" KeyboardNavigation.DirectionalNavigation="Contained" 
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                                 </Grid>
                             </ScrollViewer>
                         </Border>
                     </Themes:SystemDropShadowChrome>
                 </Popup>
-                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" BorderThickness="{TemplateBinding BorderThickness}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{DynamicResource ComboBoxToggleButton}"/>
-                <ItemsControl IsHitTestVisible="false" ItemsSource="{Binding Path=SelectedItems, ElementName=listBox}" Margin="4,0,0,0">
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" 
+                              BorderThickness="{TemplateBinding BorderThickness}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                              Style="{DynamicResource ComboBoxToggleButton}"/>
+                <ItemsControl x:Name="comboBoxTitle" IsHitTestVisible="False" Margin="4,0,0,0">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel  IsItemsHost="True" Orientation="Horizontal" />
+                            <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -230,9 +240,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
                 </Grid.ColumnDefinitions>
-                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                       PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
                     <Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">
-                        <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                        <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" 
+                                Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                             <ScrollViewer x:Name="DropDownScrollViewer">
                                 <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                     <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">

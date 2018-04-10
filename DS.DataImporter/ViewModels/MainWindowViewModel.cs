@@ -36,7 +36,8 @@ namespace DS.DataImporter
         }
         private IDataImport dataImport;
         public ICommand OpenImportDialog { get { return new RelayCommand(OpenImportDialogExecute, () => true); } }
-        
+        //public ICommand OpenImportDialog { get { return new RelayCommand(LoadCustomData, () => true); } }
+
         public void OpenImportDialogExecute(object parameter)
         {
             var importVM = new ImportSettingsDialogVievModel();
@@ -51,13 +52,13 @@ namespace DS.DataImporter
             importView.Close();
         }
 
-        private void LoadCustomData(object parameter)
+        private void LoadCustomData(string parameter)
         {
             AsciiSettings asciiSettings = new AsciiSettings()
             {
                 ColumnDelimiter = ";",
-                DateTimeFormat = "dd.MM.yyyy HH:mm:ss",
-                FileName = "shortValidSamples.csv",
+                DateTimeFormat = parameter == "long" ? "yyyy-MM-dd HH:mm:ss" : "dd.MM.yyyy HH:mm:ss",
+                FileName = parameter == "long" ? "longValidSamples.csv" : "shortValidSamples.csv",
                 NumberDelimiter = ",",
                 SkipFirstRowsNum = 1,
                 UseFirstRowAsHeader = true
@@ -131,14 +132,9 @@ namespace DS.DataImporter
             return rowsTable.AsDataView();
         }
 
-        //public MainWindowViewModel(IEnumerable<object> headers, IEnumerable<Row> rows)
-        //{
-        //    this.headers = headers;
-        //    this.rows = rows;
-        //}
-
         public MainWindowViewModel()
         {
+            LoadCustomData("long");
         }
     }
 }
