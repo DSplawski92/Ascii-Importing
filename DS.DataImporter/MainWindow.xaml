@@ -12,7 +12,6 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <interfaces:MultiSelectComboBoxConverter x:Key="multiSelectComboBoxConverter"/>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
