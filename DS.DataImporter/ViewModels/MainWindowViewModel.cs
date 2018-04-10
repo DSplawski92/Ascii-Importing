@@ -134,7 +134,6 @@ namespace DS.DataImporter
 
         public MainWindowViewModel()
         {
-            LoadCustomData("long");
         }
     }
 }

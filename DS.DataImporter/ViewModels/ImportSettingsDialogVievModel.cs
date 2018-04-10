@@ -81,6 +81,7 @@ namespace DS.DataImporter
 
         public ImportSettingsDialogVievModel()
         {
+            AsciiSettings = new AsciiSettings();
         }
     }
 }
