@@ -99,6 +99,10 @@
     <Compile Include="ViewModels\ImportAsciiSettingsDialogViewModel.cs" />
     <Compile Include="ViewModels\ImportExcelDataDialogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="MultiSelectComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ImportExcelDataDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

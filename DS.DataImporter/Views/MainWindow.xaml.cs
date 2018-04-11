@@ -31,7 +31,8 @@ namespace DS.DataImporter
         private void OnSourceUpdated(object sender, EventArgs e)
         {
             ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
-            var item = ((ListBox)combo.Template.FindName("listBox", combo)).SelectedItems[0];
+            var lb = ((ListBox)combo.Template.FindName("listBox", combo));
+            lb.SelectionChanged += listBox_SelectionChanged;
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
