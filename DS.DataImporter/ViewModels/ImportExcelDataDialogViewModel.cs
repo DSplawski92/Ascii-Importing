@@ -1,4 +1,4 @@
-﻿using DS.AsciiImport;
+﻿using DS.ExcelImport;
 using DS.Interfaces;
 using Microsoft.Win32;
 using System.ComponentModel;
@@ -6,22 +6,22 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DS.DataImporter
+namespace DS.DataImporter.ViewModels
 {
-    class ImportAsciiSettingsDialogViewModel : INotifyPropertyChanged
+    class ImportExcelDataDialogViewModel : INotifyPropertyChanged
     {
-        private AsciiSettings asciiSettings;
-        public AsciiSettings AsciiSettings
+        private ExcelSettings excelSettings;
+        public ExcelSettings ExcelSettings
         {
             get
             {
-                return asciiSettings;
+                return excelSettings;
             }
             set
             {
-                if (asciiSettings != value)
+                if (excelSettings != value)
                 {
-                    asciiSettings = value;
+                    excelSettings = value;
                     OnPropertyChanged();
                 }
             }
@@ -30,7 +30,7 @@ namespace DS.DataImporter
         {
             get
             {
-                return new[] 
+                return new[]
                 {
                     "dd.MM.yyyy HH:mm:ss", "dd-MM-yyyy HH:mm:ss", "dd/MM/yyyy HH:mm:ss",
                     "yyyy.MM.dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd HH:mm:ss",
@@ -45,29 +45,21 @@ namespace DS.DataImporter
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
-            fileDialog.Filter = "Ascii files (*.txt; *.csv)|*.txt;*.csv";
+            fileDialog.Filter = "Binary files (*.xls, *.xlsx, *.ods)|*.xls;*.xlsx;*.ods";
             if (fileDialog.ShowDialog() == true)
             {
-                AsciiSettings.FileName = fileDialog.FileName;
-                OnPropertyChanged("AsciiSettings");
+                ExcelSettings.FileName = fileDialog.FileName;
+                OnPropertyChanged("ExcelSettings");
             }
         }
 
         private bool CanCloseDialogExecute()
         {
-            if (string.IsNullOrWhiteSpace(AsciiSettings.ColumnDelimiter))
+            if (string.IsNullOrWhiteSpace(ExcelSettings.DateTimeFormat))
             {
                 return false;
             }
-            else if (string.IsNullOrWhiteSpace(AsciiSettings.DateTimeFormat))
-            {
-                return false;
-            }
-            else if(string.IsNullOrWhiteSpace(AsciiSettings.FileName))
-            {
-                return false;
-            }
-            else if (string.IsNullOrWhiteSpace(AsciiSettings.NumberDelimiter))
+            else if (string.IsNullOrWhiteSpace(ExcelSettings.FileName))
             {
                 return false;
             }
@@ -83,7 +75,7 @@ namespace DS.DataImporter
         private void CancelCloseDialogExecute(object parameter)
         {
             (parameter as Window).DialogResult = false;
-        }      
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -95,9 +87,9 @@ namespace DS.DataImporter
             }
         }
 
-        public ImportAsciiSettingsDialogViewModel()
+        public ImportExcelDataDialogViewModel()
         {
-            AsciiSettings = new AsciiSettings();
+            ExcelSettings = new ExcelSettings();
         }
     }
 }

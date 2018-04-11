@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DS.DataImporter"
         xmlns:interfaces="clr-namespace:DS.Interfaces;assembly=DS.Interfaces"
         mc:Ignorable="d"     
-        Title="ASCII Import Settings" Height="350" Width="300">
+        Title="ASCII Import Settings" Width="300"
+        SizeToContent="Height">
     <Window.Resources>
         <interfaces:IntConverter x:Key="intConverter"/>
     </Window.Resources>

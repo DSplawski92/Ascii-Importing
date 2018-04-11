@@ -1,4 +1,5 @@
 ﻿using DS.AsciiImport;
+using DS.DataImporter.ViewModels;
 using DS.ExcelImport;
 using DS.Interfaces;
 using System;
@@ -37,7 +38,7 @@ namespace DS.DataImporter
         }
         private IDataImport dataImport;
         public ICommand OpenAsciiImportDialog { get { return new RelayCommand(OpenAsciiImportDialogExecute, () => true); } }
-        public ICommand OpenExcelImportDialog { get { return new RelayCommand(OpenAsciiImportDialogExecute, () => true); } }
+        public ICommand OpenExcelImportDialog { get { return new RelayCommand(OpenExcelImportDialogExecute, () => true); } }
 
         private void LoadCustomData(string parameter)
         {
@@ -77,22 +78,22 @@ namespace DS.DataImporter
 
         public void OpenExcelImportDialogExecute(object parameter)
         {
-            var importVM = new ImportAsciiSettingsDialogViewModel();
-            var importView = new ImportAsciiSettingsDialog
+            var importVM = new ImportExcelDataDialogViewModel();
+            var importView = new ImportExcelDataDialog
             {
                 DataContext = importVM
             };
 
             if (importView.ShowDialog() == true)
             {
-                ImportAsciiData(importVM.AsciiSettings);
+                ImportExcelData(importVM.ExcelSettings);
             }
             importView.Close();
         }
 
-        private void ImportExcelData(ExcelSettings asciiSettings)
+        private void ImportExcelData(ExcelSettings excelSettings)
         {
-            dataImport = new ExcelDataImport(asciiSettings);
+            dataImport = new ExcelDataImport(excelSettings);
             Headers = dataImport.GetHeaders();
             rows = dataImport.LoadAll();
             RowsView = CreateDataView();

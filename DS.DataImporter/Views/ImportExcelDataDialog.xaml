@@ -1,12 +1,42 @@
-﻿<Window x:Class="DS.DataImporter.ImportExcelDataDialog"
+﻿<Window x:Class="DS.DataImporter.ImportExcelDataDialog" x:Name="importExcelDataDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DS.DataImporter"
-        mc:Ignorable="d"
-        Title="ImportExcelDataDialog" Height="450" Width="800">
+        xmlns:interfaces="clr-namespace:DS.Interfaces;assembly=DS.Interfaces"
+        mc:Ignorable="d"     
+        Title="Excel Import Settings" Width="300"
+        SizeToContent="Height">
+    <Window.Resources>
+        <interfaces:IntConverter x:Key="intConverter"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="10">
+            <Label Content="Select excel file to import:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+            <WrapPanel>
+                <TextBox Text="{Binding Path=ExcelSettings.FileName}" IsReadOnly="True" Width="200"></TextBox>
+                <Button Content="Browse" Command="{Binding FileDialog}"></Button>
+            </WrapPanel>
+
+            <Label Content="Date time format:"/>
+            <ComboBox ItemsSource="{Binding Path=DateTimeFormats}" Width="Auto" Height="23" SelectedValue="{Binding Path=ExcelSettings.DateTimeFormat, Mode=OneWayToSource}"/>
+
+            <Label Content="Number delimiter:"/>
+            <TextBox Width="Auto" MaxLength="1" Text="{Binding Path=ExcelSettings.NumberDelimiter, Mode=OneWayToSource}"/>
+
+            <Label Content="Skip first rows number:"/>
+            <TextBox Text="{Binding Path=ExcelSettings.SkipFirstRowsNum, Converter={StaticResource intConverter}, Mode=OneWayToSource}"/>
+
+            <CheckBox Content="Headers in first row" VerticalAlignment="Center" Margin="0,10" IsChecked="{Binding ExcelSettings.UseFirstRowAsHeader, Mode=OneWayToSource}"/>
+        </StackPanel>
+        <WrapPanel Margin="0, 0, 20, 20" Grid.Row="1" HorizontalAlignment="Right">
+            <Button Width="60"  Margin="0,0,20,0" Content="OK" Command="{Binding SuccessCloseDialog}" CommandParameter="{Binding ElementName=importExcelDataDialog}" VerticalAlignment="Bottom"/>
+            <Button Width="60"  Content="Cancel" Command="{Binding CancelCloseDialog}" CommandParameter="{Binding ElementName=importExcelDataDialog}"/>
+        </WrapPanel>
     </Grid>
 </Window>

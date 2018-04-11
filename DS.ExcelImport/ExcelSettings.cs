@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DS.ExcelImport
+﻿namespace DS.ExcelImport
 {
     public class ExcelSettings
     {
@@ -13,6 +7,15 @@ namespace DS.ExcelImport
         public string NumberDelimiter { get; set; }
         public bool UseFirstRowAsHeader { get; set; }
         public int SkipFirstRowsNum { get; set; }
+
+        public ExcelSettings()
+        {
+            FileName = string.Empty;
+            DateTimeFormat = string.Empty;
+            NumberDelimiter = string.Empty;
+            UseFirstRowAsHeader = true;
+            SkipFirstRowsNum = 0;
+        }
 
         public override string ToString()
         {

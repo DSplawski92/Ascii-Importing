@@ -97,6 +97,7 @@
     </ApplicationDefinition>
     <Compile Include="DataMerger.cs" />
     <Compile Include="ViewModels\ImportAsciiSettingsDialogViewModel.cs" />
+    <Compile Include="ViewModels\ImportExcelDataDialogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Views\ImportExcelDataDialog.xaml">
       <SubType>Designer</SubType>
