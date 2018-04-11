@@ -55,7 +55,7 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.13\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.2\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
@@ -71,7 +71,12 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -91,13 +96,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataMerger.cs" />
-    <Compile Include="ViewModels\ImportSettingsDialogVievModel.cs" />
+    <Compile Include="ViewModels\ImportAsciiSettingsDialogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Page Include="ImportSettingDialog.xaml">
+    <Page Include="Views\ImportExcelDataDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\ImportAsciiSettingDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -105,10 +114,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ImportSettingDialog.xaml.cs">
-      <DependentUpon>ImportSettingDialog.xaml</DependentUpon>
+    <Compile Include="Views\ImportExcelDataDialog.xaml.cs">
+      <DependentUpon>ImportExcelDataDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\ImportAsciiSettingDialog.xaml.cs">
+      <DependentUpon>ImportAsciiSettingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -131,6 +143,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -173,6 +189,10 @@
     <ProjectReference Include="..\DS.AsciiImport\DS.AsciiImport.csproj">
       <Project>{3E00D78F-7273-4F51-9202-D248B06F6D09}</Project>
       <Name>DS.AsciiImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS.ExcelImport\DS.ExcelImport.csproj">
+      <Project>{28510978-7E40-4BA5-B1F2-8D52D1828649}</Project>
+      <Name>DS.ExcelImport</Name>
     </ProjectReference>
     <ProjectReference Include="..\DS.Interfaces\DS.Interfaces.csproj">
       <Project>{E241EF13-5C3E-427D-B88F-029804C77352}</Project>

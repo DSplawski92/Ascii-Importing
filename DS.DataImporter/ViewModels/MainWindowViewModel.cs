@@ -1,4 +1,5 @@
 ﻿using DS.AsciiImport;
+using DS.ExcelImport;
 using DS.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -35,22 +36,8 @@ namespace DS.DataImporter
             }
         }
         private IDataImport dataImport;
-        public ICommand OpenImportDialog { get { return new RelayCommand(OpenImportDialogExecute, () => true); } }
-        //public ICommand OpenImportDialog { get { return new RelayCommand(LoadCustomData, () => true); } }
-
-        public void OpenImportDialogExecute(object parameter)
-        {
-            var importVM = new ImportSettingsDialogVievModel();
-            var importView = new ImportSettingsDialog
-            {
-                DataContext = importVM
-            };
-            if (importView.ShowDialog() == true)
-            {
-                ImportData(importVM.AsciiSettings);
-            }
-            importView.Close();
-        }
+        public ICommand OpenAsciiImportDialog { get { return new RelayCommand(OpenAsciiImportDialogExecute, () => true); } }
+        public ICommand OpenExcelImportDialog { get { return new RelayCommand(OpenAsciiImportDialogExecute, () => true); } }
 
         private void LoadCustomData(string parameter)
         {
@@ -63,12 +50,49 @@ namespace DS.DataImporter
                 SkipFirstRowsNum = 1,
                 UseFirstRowAsHeader = true
             };
-            ImportData(asciiSettings);
+            ImportAsciiData(asciiSettings);
         }
 
-        private void ImportData(AsciiSettings asciiSettings)
+        public void OpenAsciiImportDialogExecute(object parameter)
+        {
+            var importVM = new ImportAsciiSettingsDialogViewModel();
+            var importView = new ImportAsciiSettingsDialog
+            {
+                DataContext = importVM
+            };
+            if (importView.ShowDialog() == true)
+            {
+                ImportAsciiData(importVM.AsciiSettings);
+            }
+            importView.Close();
+        }
+
+        private void ImportAsciiData(AsciiSettings asciiSettings)
         {
             dataImport = new AsciiDataImport(asciiSettings);
+            Headers = dataImport.GetHeaders();
+            rows = dataImport.LoadAll();
+            RowsView = CreateDataView();
+        }
+
+        public void OpenExcelImportDialogExecute(object parameter)
+        {
+            var importVM = new ImportAsciiSettingsDialogViewModel();
+            var importView = new ImportAsciiSettingsDialog
+            {
+                DataContext = importVM
+            };
+
+            if (importView.ShowDialog() == true)
+            {
+                ImportAsciiData(importVM.AsciiSettings);
+            }
+            importView.Close();
+        }
+
+        private void ImportExcelData(ExcelSettings asciiSettings)
+        {
+            dataImport = new ExcelDataImport(asciiSettings);
             Headers = dataImport.GetHeaders();
             rows = dataImport.LoadAll();
             RowsView = CreateDataView();

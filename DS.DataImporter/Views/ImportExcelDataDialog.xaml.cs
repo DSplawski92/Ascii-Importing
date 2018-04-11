@@ -2,9 +2,9 @@
 
 namespace DS.DataImporter
 {
-    public partial class ImportSettingsDialog : Window
+    public partial class ImportExcelDataDialog : Window
     {
-        public ImportSettingsDialog()
+        public ImportExcelDataDialog()
         {
             InitializeComponent();
         }

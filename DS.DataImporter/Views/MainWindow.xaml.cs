@@ -37,7 +37,9 @@ namespace DS.DataImporter
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboTitle = ((ItemsControl)combo.Template.FindName("comboBoxTitle", combo));
-            comboTitle.ItemsSource = (sender as ListBox).SelectedItems.Cast<string>().Select(arg => arg + ";");
+            var listBox = (sender as ListBox);
+            var selectedItems = listBox.SelectedItems.Cast<string>();
+            comboTitle.ItemsSource = selectedItems.OrderBy(arg => listBox.Items.IndexOf(arg)).Select(arg => arg + ";");
         }
     }
 }

@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using DS.Interfaces;
+using NLog;
 
 namespace DS.DataImporter
 {
-    /// <summary>
-    /// Logika interakcji dla klasy App.xaml
-    /// </summary>
     public partial class App : Application
     {
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
-        //    new MainWindow
-        //    {
-        //        DataContext = new RowsViewModel()
-        //    }.Show();
-        //}
+        Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public App()
+        {
+            Current.Dispatcher.UnhandledException += Dispatcher_UnhandledException;
+            System.AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+        {
+            logger.Debug(sender.GetType().Name + "|" + (e.ExceptionObject as Exception).Message);
+        }
+
+        private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            logger.Debug(sender.GetType().Name + "|" + e.Exception.Message);
+        }
     }
 }

@@ -8,9 +8,24 @@ using System.Windows.Input;
 
 namespace DS.DataImporter
 {
-    class ImportSettingsDialogVievModel : INotifyPropertyChanged
+    class ImportAsciiSettingsDialogViewModel : INotifyPropertyChanged
     {
-        public AsciiSettings AsciiSettings { get; set; }
+        private AsciiSettings asciiSettings;
+        public AsciiSettings AsciiSettings
+        {
+            get
+            {
+                return asciiSettings;
+            }
+            set
+            {
+                if (asciiSettings != value)
+                {
+                    asciiSettings = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string[] DateTimeFormats
         {
             get
@@ -34,6 +49,7 @@ namespace DS.DataImporter
             if (fileDialog.ShowDialog() == true)
             {
                 AsciiSettings.FileName = fileDialog.FileName;
+                OnPropertyChanged("AsciiSettings");
             }
         }
 
@@ -79,7 +95,7 @@ namespace DS.DataImporter
             }
         }
 
-        public ImportSettingsDialogVievModel()
+        public ImportAsciiSettingsDialogViewModel()
         {
             AsciiSettings = new AsciiSettings();
         }

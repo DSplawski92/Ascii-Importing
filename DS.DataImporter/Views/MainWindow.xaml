@@ -1,13 +1,12 @@
-﻿<Window
+﻿<Window x:Class="DS.DataImporter.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="DS.DataImporter.MainWindow"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
         mc:Ignorable="d"
         Title="Data Importer" MinHeight="500" MinWidth="600"
-        xmlns:local="clr-namespace:DS.DataImporter"
-        xmlns:interfaces="clr-namespace:DS.Interfaces;assembly=DS.Interfaces">
+        xmlns:local="clr-namespace:DS.DataImporter">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -318,7 +317,10 @@
         
         <Menu Grid.Row="0" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Top" Width="Auto">
             <MenuItem Header="Data">
-                <MenuItem Header="Load from file" Tag="load ascii file" Command="{Binding OpenImportDialog}"/>
+                <MenuItem Header="Load from file">
+                    <MenuItem Header="ASCII file" Command="{Binding OpenAsciiImportDialog}"/>
+                    <MenuItem Header="Excel file" Command="{Binding OpenExcelImportDialog}"/>
+                </MenuItem> 
                 <!--<MenuItem Header="Load and merge files" Tag="merge ascii files" Click="LoadData_Click"/>-->
             </MenuItem>
         </Menu>
