@@ -100,17 +100,25 @@ namespace UnitTestProject
         }
 
         [TestCaseSource(typeof(DataMergerSource), "InvalidConfiguration")]
-        public void LoadAll_InvalidConfiguration_ThrownException(IEnumerable<AsciiSettings> settingsSet)
+        public void LoadAll_InvalidConfiguration_ThrownException(IEnumerable<AsciiSettings> settingsSet, IEnumerable<Row> validMergedData)
         {
             // arrange
             List<IDataImport> importers = settingsSet.Select(arg => (IDataImport)new AsciiDataImport(arg)).ToList();
             DataMerger dataMerger = new DataMerger(importers);
 
             // act
-            TestDelegate action = () => dataMerger.LoadAll();
+            var mergedData = dataMerger.LoadAll();
 
             // assert
-            Assert.Throws<FormatException>(action);
+            Assert.AreEqual(validMergedData.Count(), mergedData.Count());
+            var mergedDataEnumerator = mergedData.GetEnumerator();
+            var validMergedDataEnumerator = validMergedData.GetEnumerator();
+
+            while (mergedDataEnumerator.MoveNext() && validMergedDataEnumerator.MoveNext())
+            {
+                Assert.AreEqual(mergedDataEnumerator.Current.Timestamp, validMergedDataEnumerator.Current.Timestamp);
+                CollectionAssert.AreEqual(mergedDataEnumerator.Current.Samples, validMergedDataEnumerator.Current.Samples);
+            }
         }
 
         [TestCaseSource(typeof(DataMergerSource), "FilesWithDifferentConfigurations")]

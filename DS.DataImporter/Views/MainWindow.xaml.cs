@@ -32,10 +32,10 @@ namespace DS.DataImporter
         {
             ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
             var lb = ((ListBox)combo.Template.FindName("listBox", combo));
-            lb.SelectionChanged += listBox_SelectionChanged;
+            lb.SelectionChanged += ListBox_SelectionChanged;
         }
 
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboTitle = ((ItemsControl)combo.Template.FindName("comboBoxTitle", combo));
             var listBox = (sender as ListBox);

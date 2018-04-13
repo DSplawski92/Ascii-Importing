@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DS.DataImporter;
 using DS.AsciiImport;
+using DS.Interfaces;
 
 namespace UnitTestProject
 {
@@ -84,10 +85,24 @@ namespace UnitTestProject
             {
                 var settings = new List<AsciiSettings>()
                 {
-                    CreateAsciiSettings("shortValidSamples.csv", colDelimiter: "/"),
-                    CreateAsciiSettings("shortValidSamples2.csv", colDelimiter: "/")
+                    CreateAsciiSettings("shortValidSamples.csv", colDelimiter: "|", skipFirstRowsNum: 1),
+                    CreateAsciiSettings("shortValidSamples2.csv", colDelimiter: ";", skipFirstRowsNum: 1)
                 };
-                yield return new TestCaseData(settings);
+
+                var mergedData = new List<Row>()
+                {
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 36, 23), Samples = new List<double>(){ 109.4 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 39, 13), Samples = new List<double>(){ 110.7 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 40, 13), Samples = new List<double>(){ 111.5 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 41, 13), Samples = new List<double>(){ 111.9 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 42, 13), Samples = new List<double>(){ 112.3 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 43, 13), Samples = new List<double>(){ 112.8 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 44, 13), Samples = new List<double>(){ 113.2 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 45, 58), Samples = new List<double>(){ 113.5 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 46, 13), Samples = new List<double>(){ 113.7 } },
+                    new Row() { Timestamp = new DateTime(2017, 1, 1, 3, 47, 13), Samples = new List<double>(){ 113.8 } },
+                };
+                yield return new TestCaseData(settings, mergedData);
             }
         }
         public static IEnumerable DataWithEmptyLines

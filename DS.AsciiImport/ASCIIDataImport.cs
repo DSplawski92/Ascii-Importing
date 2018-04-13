@@ -121,7 +121,7 @@ namespace DS.AsciiImport
                     cells.Add("NaN");
                 }
             }
-                //throw new FormatException("Number of samples are different from number of columns.");
+            //throw new FormatException("Number of samples are different from number of columns.");
 
             NumberFormatInfo numberFormat = new NumberFormatInfo
             {

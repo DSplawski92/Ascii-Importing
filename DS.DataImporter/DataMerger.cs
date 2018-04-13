@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DS.DataImporter
 {
@@ -68,14 +66,11 @@ namespace DS.DataImporter
 
         public void Save()
         {
-            string file = "merged.csv";
-
-            if (File.Exists(file))
-                File.Delete(file);
+            string file = "merged" + DateTime.Now.ToShortDateString() + ".csv";
 
             StringBuilder headers = new StringBuilder();
             mergedHeaders.ForEach(arg => headers.Append(";" + (string)arg));
-            FileStream fs = new FileStream("merged.csv", FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream(file, FileMode.Append, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine(headers.Remove(0, 1));
 
@@ -117,21 +112,19 @@ namespace DS.DataImporter
         {
             try
             {
-                var rows = importer.LoadAll();
+                foreach (var row in importer.LoadAll())
+                {
+                    var array = GetValuesArray(row);
+                    var samples = row.Samples.ToArray();
+                    for (int sampleIndex = 0; sampleIndex < samples.Length; sampleIndex++)
+                    {
+                        array[startingIndex + sampleIndex] = samples[sampleIndex];
+                    }
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return;
-
-            }
-            foreach (var row in importer.LoadAll())
-            {
-                var array = GetValuesArray(row);
-                var samples = row.Samples.ToArray();
-                for (int sampleIndex = 0; sampleIndex < samples.Length; sampleIndex++)
-                {
-                    array[startingIndex + sampleIndex] = samples[sampleIndex];
-                }
             }
         }
 

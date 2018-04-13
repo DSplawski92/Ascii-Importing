@@ -6,6 +6,7 @@ namespace DS.DataImporter
 {
     public partial class App : Application
     {
+
         Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public App()
         {

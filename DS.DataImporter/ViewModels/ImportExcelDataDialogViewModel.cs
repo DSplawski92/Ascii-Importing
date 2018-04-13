@@ -43,9 +43,11 @@ namespace DS.DataImporter.ViewModels
 
         private void OpenFileDialogExecute(object parameter)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "Binary files (*.xls, *.xlsx, *.ods)|*.xls;*.xlsx;*.ods"
+            };
 
-            fileDialog.Filter = "Binary files (*.xls, *.xlsx, *.ods)|*.xls;*.xlsx;*.ods";
             if (fileDialog.ShowDialog() == true)
             {
                 ExcelSettings.FileName = fileDialog.FileName;

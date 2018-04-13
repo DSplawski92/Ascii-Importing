@@ -103,6 +103,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DataMergerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ImportExcelDataDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +122,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\DataMergerDialog.xaml.cs">
+      <DependentUpon>DataMergerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportExcelDataDialog.xaml.cs">
       <DependentUpon>ImportExcelDataDialog.xaml</DependentUpon>
