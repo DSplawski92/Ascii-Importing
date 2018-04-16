@@ -64,9 +64,9 @@ namespace DS.ExcelImport
                     {
                         try
                         {
+                            NextRow(reader);
                             if (colsNum == null)
                             {
-                                NextRow(reader);
                                 colsNum = GetExcelRowCells(workbook, reader).Count();
                             }
                             do
