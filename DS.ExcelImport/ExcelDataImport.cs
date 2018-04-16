@@ -64,7 +64,8 @@ namespace DS.ExcelImport
                     {
                         try
                         {
-                            NextRow(reader);
+                            FindExcelRow(reader);
+                            NextRow(reader, take);
                             if (colsNum == null)
                             {
                                 colsNum = GetExcelRowCells(workbook, reader).Count();
@@ -85,27 +86,7 @@ namespace DS.ExcelImport
                         }
                     }
                 }
-                //IWorkbook workbook = WorkbookFactory.Create(fileStream);
-                //ISheet worksheet = workbook.GetSheetAt(0);
-
-                //if (worksheet.LastRowNum == 0 && worksheet.GetRow(0) == null)
-                //{
-                //    return new List<Interfaces.Row>();
             }
-
-
-            //int rowId = skip + worksheet.FirstRowNum;
-            //for (int i = 0; i < take && rowId <= worksheet.LastRowNum; i++)
-            //{
-            //    rowId = i + skip + worksheet.FirstRowNum;
-            //    var excelRow = worksheet.GetRow(rowId);
-            //    var row = GetRow(excelRow);
-            //    if (excelRow != null && row != null && !rows.Select(arg => arg.Timestamp).Contains(row.Timestamp))
-            //    {
-            //        rows.Add(row);
-            //    }
-            //}
-            //workbook.Close();
             return rows.AsEnumerable();
         }
 
@@ -129,7 +110,8 @@ namespace DS.ExcelImport
                     {
                         try
                         {
-                            if (NextRow(reader))
+                            FindExcelRow(reader);
+                            if (reader.ReadFirstChild())
                             {
                                 cells = GetExcelRowCells(workbook, reader);
                             }
@@ -143,12 +125,19 @@ namespace DS.ExcelImport
             }
             return cells;
         }
-
-        private bool NextRow(OpenXmlReader reader, int skip = 0, int take = int.MaxValue)
+        private void FindExcelRow(OpenXmlReader reader, int skip = 0)
         {
-            while (reader.Read())
+            while (reader.Read() && reader.ElementType != typeof(OpenXML.Row)) ;
+            while (--skip > 0)
             {
-                if (reader.ElementType == typeof(OpenXML.Row) && skip-- <= 0)
+                reader.ReadNextSibling();
+            }
+        }
+        private bool NextRow(OpenXmlReader reader, int take = int.MaxValue)
+        {
+            while (reader.ReadNextSibling())
+            {
+                if (reader.ElementType == typeof(OpenXML.Row))
                 {
                     if (take-- > 0)
                     {
@@ -160,7 +149,7 @@ namespace DS.ExcelImport
                         return false;
                     }
                 }
-            }
+            } 
             return false;
         }
 
@@ -216,7 +205,20 @@ namespace DS.ExcelImport
 
             DateTime timestamp;
             Interfaces.Row row = null;
-            if(DateTime.TryParseExact(excelRow.First().ToString(), settings.DateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
+            double time;
+            try
+            {
+                time = double.Parse(excelRow.First(), CultureInfo.InvariantCulture);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
+            timestamp = DateTime.FromOADate(time);
+            string ts = timestamp.ToString();
+            if (DateTime.TryParseExact(ts, settings.DateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
             {
                 double sample;
                 var samples = excelRow.Skip(1).Select(arg => double.TryParse(arg.ToString(), NumberStyles.Any, numberFormat, out sample) ? sample : double.NaN).Take(colsNum.Value);
@@ -237,6 +239,10 @@ namespace DS.ExcelImport
                     Timestamp = timestamp,
                     Samples = samples
                 };
+            }
+            else
+            {
+                throw new Exception("Date time format is invalid");
             }
             return row;
         }
