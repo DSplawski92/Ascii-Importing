@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Margin="10">
-                <Label Content="Select ASCII file to import:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                <Label Content="Select file to import:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
                 <WrapPanel>
                     <TextBox Text="{Binding Path=AsciiSettings.FileName}" IsReadOnly="True" Width="200"></TextBox>
                     <Button Content="Browse" Command="{Binding FileDialog}"></Button>

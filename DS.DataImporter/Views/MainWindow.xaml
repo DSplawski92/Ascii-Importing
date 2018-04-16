@@ -41,7 +41,16 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Stretch" Margin="20">
             <Label Content="Select columns to display in table:" HorizontalAlignment="Center" VerticalAlignment="Top" />
             <ComboBox x:Name="combo" ItemsSource="{Binding Headers, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" SelectionChanged="Combo_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Top"
-                      Margin="0,0,0,0" MinWidth="50" Width="Auto" Height="23" Style="{DynamicResource MultiSelect}"/>
+                      Margin="0,0,0,0" MinWidth="50" Width="150" Height="23" Style="{DynamicResource MultiSelect}">
+                <ComboBox.ToolTip>
+                    <ToolTip >
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">Selected columns to display:</TextBlock>
+                            <TextBlock x:Name="tooltipColumnsList" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </ToolTip>
+                </ComboBox.ToolTip>
+            </ComboBox>
         </StackPanel>
     </Grid>
 </Window>

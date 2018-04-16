@@ -31,8 +31,15 @@ namespace DS.DataImporter
         private void OnSourceUpdated(object sender, EventArgs e)
         {
             ((ListBox)combo.Template.FindName("listBox", combo)).SelectAll();
-            var lb = ((ListBox)combo.Template.FindName("listBox", combo));
-            lb.SelectionChanged += ListBox_SelectionChanged;
+            combo.UpdateLayout();
+            var listBox = ((ListBox)combo.Template.FindName("listBox", combo));
+            listBox.SelectionChanged += ListBox_SelectionChanged;
+
+            var comboTitle = ((ItemsControl)combo.Template.FindName("comboBoxTitle", combo));
+            var selectedItems = listBox.SelectedItems.Cast<string>();
+            var orderedSelectedItems = selectedItems.OrderBy(arg => listBox.Items.IndexOf(arg)).Select(arg => arg + "; ");
+            comboTitle.ItemsSource = orderedSelectedItems;
+            tooltipColumnsList.Text = string.Join("", orderedSelectedItems);
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -40,7 +47,9 @@ namespace DS.DataImporter
             var comboTitle = ((ItemsControl)combo.Template.FindName("comboBoxTitle", combo));
             var listBox = (sender as ListBox);
             var selectedItems = listBox.SelectedItems.Cast<string>();
-            comboTitle.ItemsSource = selectedItems.OrderBy(arg => listBox.Items.IndexOf(arg)).Select(arg => arg + ";");
+            var orderedSelectedItems = selectedItems.OrderBy(arg => listBox.Items.IndexOf(arg)).Select(arg => arg + "; ");
+            comboTitle.ItemsSource = orderedSelectedItems;
+            tooltipColumnsList.Text = string.Join("", orderedSelectedItems);
         }
     }
 }
